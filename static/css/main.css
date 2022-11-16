@@ -1,0 +1,44 @@
+* {
+    /* -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; */
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    margin: auto;
+    padding: auto;
+    background-color: black;
+}
+
+#container {
+    margin: auto;
+    width: 640px;
+    height: 360px;
+    padding: auto;
+    border-style: solid;
+    border-color: #e0e0e0;
+}
+
+#speech-to-text-output {
+    margin: 30px;
+}
+
+p {
+    font-size: 60px;
+    color: #e0e0e0;
+}
+
+/* media queries */
+
+/* @media (max-width: 800px) {
+    body {
+        background: #f1f7dc;
+    }
+    #container {
+        margin: 0;
+        width: 100%;
+        padding: 2em;
+    }
+} */
