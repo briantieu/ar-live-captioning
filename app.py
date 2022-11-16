@@ -5,11 +5,11 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index.html')
 def index():
-    return render_template('index.html', the_title='AR Live Captioning')
+    return render_template('index.html')
 
-@app.route('/audio.html')
-def audio():
-    return render_template('audio.html')
+@app.route('/tiger.html')
+def tiger():
+    return render_template('tiger.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

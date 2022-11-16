@@ -10,6 +10,7 @@ html {
     margin: auto;
     padding: auto;
     background-color: black;
+    scroll-behavior: smooth;
 }
 
 #container {
@@ -17,12 +18,12 @@ html {
     width: 640px;
     height: 360px;
     padding: auto;
-    border-style: solid;
-    border-color: #e0e0e0;
+    /* border-style: solid;
+    border-color: #e0e0e0; */
 }
 
 #speech-to-text-output {
-    margin: 30px;
+    padding: 30px;
 }
 
 p {

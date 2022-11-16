@@ -1,11 +1,23 @@
 const text_p = document.getElementById('speech-to-text-output');
 
+if (!window.hasOwnProperty("webkitSpeechRecognition")) {
+    alert("Unable to use the Speech Recognition API");
+} else {
+    console.log("Good to go.")
+}
+
 console.log(text_p)
 console.log(document)
-window.SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
+// window.SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
 
-const recognition = new window.SpeechRecognition();
+const recognition = new webkitSpeechRecognition(); // window.SpeechRecognition();
+// recognition.continuous = true;
 recognition.interimResults = true;
+recognition.lang = "en-US";
+
+recognition.addEventListener('onerror', (e) => {
+    console.error(e);
+});
 
 // let p = document.createElement('p');
 
@@ -18,7 +30,7 @@ recognition.addEventListener('result', (e) => {
     // console.log(e)
     console.log(text);
     text_p.innerHTML = text;
-
+    window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
 });
 
 recognition.addEventListener('end', () => {
