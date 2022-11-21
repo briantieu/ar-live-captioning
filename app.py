@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response, redirect, url_for
 from db import insert_db, read_db, init_db
+import os
 import sqlite3
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"serviceAccountToken.json"
+
 app = Flask(__name__)
 
 def translate_text(target, text):
@@ -26,14 +30,14 @@ def translate_text(target, text):
     # print(u"Detected source language: {}".format(result["detectedSourceLanguage"]))
 
 # two decorators, same function
-@app.route('/post', methods=['POST'])
-def post():
+@app.route('/insertdb', methods=['POST'])
+def insertdb():
     text = request.json['content']
-    # translation = translate_text('zh', text)['translatedText']
-    # insert_db(translation)
+    translation = translate_text('en', text)['translatedText']
+    insert_db(translation)
     # print(translation)
-    insert_db(text)
-    return
+    # insert_db(text)
+    return {}
 
 @app.route('/')
 def record():
@@ -47,9 +51,13 @@ def record():
 
 @app.route('/display.html')
 def display():
-  return render_template('display.html', text=read_db()[0]['content'])
+    texts = read_db()
+    text = texts[0]['content'] if len(texts) > 0 else 'Listening....'
+
+    return render_template('display.html', text=text)
 
 if __name__ == '__main__':
     init_db()
     app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:\\Users\\brian\\OneDrive\\Desktop\\ar-live-captioning\\glass-live-captioning-68055e88006f.json'
     app.run(debug=True)
