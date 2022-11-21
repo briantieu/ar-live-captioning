@@ -1,3 +1,19 @@
+const sendPost = async (content) => {
+    const response = await fetch("/post", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'content': content
+        })
+    })
+
+    if (response.ok) {
+        return response
+    }
+}
+
 const text_p = document.getElementById('speech-to-text-output');
 
 if (!window.hasOwnProperty("webkitSpeechRecognition")) {
@@ -6,8 +22,6 @@ if (!window.hasOwnProperty("webkitSpeechRecognition")) {
     console.log("Good to go.")
 }
 
-console.log(text_p)
-console.log(document)
 // window.SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
 
 const recognition = new webkitSpeechRecognition(); // window.SpeechRecognition();
@@ -19,17 +33,15 @@ recognition.addEventListener('onerror', (e) => {
     console.error(e);
 });
 
-// let p = document.createElement('p');
-
 recognition.addEventListener('result', (e) => {
     const text = Array.from(e.results)
         .map(result => result[0])
         .map(result => result.transcript)
         .join('');
-    // console.log(e.results);
-    // console.log(e)
     console.log(text);
-    text_p.innerHTML = text;
+    sendPost(text)
+    text_p.innerHTML = text
+    ;
     window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
 });
 
