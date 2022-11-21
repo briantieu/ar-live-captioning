@@ -9,8 +9,9 @@ const sendPost = async (content) => {
         })
     })
 
+    console.log(response)
     if (response.ok) {
-        console.log(response)
+     //   console.log(response)
     }
 }
 

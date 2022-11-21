@@ -14,6 +14,11 @@
     <div id="container">
         <p id='speech-to-text-output'>{{text}}</p>
     </div>
+    <script>
+        const scrollDown = setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+        }, 1000);
+    </script>
     <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
 </body>
 </html>
