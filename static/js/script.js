@@ -41,7 +41,7 @@ if (!window.hasOwnProperty("webkitSpeechRecognition")) {
 const recognition = new webkitSpeechRecognition(); // window.SpeechRecognition();
 // recognition.continuous = true;
 recognition.interimResults = true;
-recognition.lang = "es-MX";
+recognition.lang = 'yue-Hant-HK';
 
 recognition.addEventListener('onerror', (e) => {
     console.error(e);
