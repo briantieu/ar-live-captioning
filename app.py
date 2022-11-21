@@ -29,9 +29,10 @@ def translate_text(target, text):
 @app.route('/post', methods=['POST'])
 def post():
     text = request.json['content']
-    translation = translate_text('zh', text)['translatedText']
-    insert_db(translation)
-    print(translation)
+    # translation = translate_text('zh', text)['translatedText']
+    # insert_db(translation)
+    # print(translation)
+    insert_db(text)
     return
 
 @app.route('/')
