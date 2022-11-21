@@ -11,7 +11,6 @@ def init_db():
         conn.executescript(f.read())
     conn.close()
 
-
 def insert_db(content):
     conn = connect_db()
     cur = conn.cursor()
@@ -26,48 +25,6 @@ def read_db():
     conn.close()
     return texts
 
-
-# from flask import Flask, request, render_template, redirect
-# from flask_sqlalchemy import SQLAlchemy
-# from datetime import datetime
-# import os
-
-# from app import app
-
-# project_dir = os.path.dirname(os.path.abspath(__file__))
-# database_file = "sqlite:///{}".format(os.path.join(project_dir, "text.db"))
-# app.config["SQLALCHEMY_DATABASE_URL"] = database_file
-# db = SQLAlchemy(app)
-
-# class Text(db.Model):
-#     id = db.Column(db.Integer, primary_key = True)
-#     content = db.Column(db.Text)
-
-# def create_text(content):
-#     text = Text(id=0, content=content)
-#     db.session.add(text)
-#     db.session.commit()
-#     db.session.refresh(text)
-
-# def read_texts():
-#     return db.session.query(Text).all()
-
-# def update_text(content):
-#     db.session.query(Text).filter_by(id=0).update({
-#         "content": content
-#     })
-#     db.session.commit()
-
-# def delete_text():
-#     db.session.query(Text).filter_by(id=0).delete()
-#     db.session.commit()
-
-# def create_or_update_text(content):
-#     if len(read_texts()) == 0:
-#         create_text(content)
-#     else:
-#         update_text(content)
-
-# def read_text():
-#     return read_texts()[0]
-
+if __name__ == '__main__':
+    init_db()
+    insert_db('Listening...')
