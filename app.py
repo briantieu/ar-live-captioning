@@ -32,7 +32,7 @@ def post():
     translation = translate_text('zh', text)['translatedText']
     insert_db(translation)
     print(translation)
-    return translation
+    return
 
 @app.route('/')
 def record():
