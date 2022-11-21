@@ -10,7 +10,7 @@ const sendPost = async (content) => {
     })
 
     if (response.ok) {
-        return response
+        console.log(response)
     }
 }
 

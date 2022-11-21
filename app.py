@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response
-from db import insert_db, read_db
+from db import insert_db, read_db, init_db
 import sqlite3
 app = Flask(__name__)
 
@@ -50,5 +50,6 @@ def display():
   return render_template('display.html', text=read_db()[0]['content'])
 
 if __name__ == '__main__':
+    init_db()
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.run(debug=True)
