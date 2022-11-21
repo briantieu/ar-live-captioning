@@ -33,10 +33,10 @@ def translate_text(target, text):
 @app.route('/insertdb', methods=['POST'])
 def insertdb():
     text = request.json['content']
-    translation = translate_text('en', text)['translatedText']
-    insert_db(translation)
+    # translation = translate_text('en', text)['translatedText']
+    # insert_db(translation)
     # print(translation)
-    # insert_db(text)
+    insert_db(text)
     return {}
 
 @app.route('/')
