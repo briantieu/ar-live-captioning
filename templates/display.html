@@ -15,9 +15,10 @@
         <p id='speech-to-text-output'>{{text}}</p>
     </div>
     <script>
-        const scrollDown = setTimeout(() => {
+        const scrollDown = () => {
             window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
-        }, 1000);
+        };
+        // $("document").ready(scrollDown);
     </script>
     <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
 </body>
