@@ -41,7 +41,7 @@ if (!window.hasOwnProperty("webkitSpeechRecognition")) {
 const recognition = new webkitSpeechRecognition(); // window.SpeechRecognition();
 // recognition.continuous = true;
 recognition.interimResults = true;
-recognition.lang = 'en-US';
+recognition.lang = 'en-US'; // es-MX
 
 recognition.addEventListener('onerror', (e) => {
     console.error(e);

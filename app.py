@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, make_response, redirect, url_for
+from flask import Flask, render_template, jsonify, request, make_response, redirect, url_for
 from db import insert_db, read_db, init_db
 import os
 import sqlite3
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"/etc/secrets/serviceAccountToken.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"serviceAccountToken.json" # /etc/secrets/serviceAccountToken.json
 # print(os.getenv('GOOGLE_APPLICATION_CREDENTIALS'))
 
 app = Flask(__name__)
@@ -49,13 +49,20 @@ def record():
     response = make_response(html)
     return response
 
+@app.route('/getText', methods=['GET'])
+def getText():
+    texts = read_db()
+    text = texts[0]['content'] if len(texts) > 0 else 'Listening....'
+    message = {'displayText': text}
+    return jsonify(message)
+
 
 @app.route('/display.html')
 def display():
-    texts = read_db()
-    text = texts[0]['content'] if len(texts) > 0 else 'Listening....'
+    # texts = read_db()
+    # text = texts[0]['content'] if len(texts) > 0 else 'Listening....'
 
-    return render_template('display.html', text=text)
+    return render_template('display.html') # , text=text)
 
 if __name__ == '__main__':
     init_db()

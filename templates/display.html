@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="0">
+    <!-- <meta http-equiv="refresh" content="0"> -->
 	<title>Displaying</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -15,10 +15,25 @@
         <p id='speech-to-text-output'>{{text}}</p>
     </div>
     <script>
-        const scrollDown = () => {
-            window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
-        };
-        // $("document").ready(scrollDown);
+        // TODO: use fetch requests instead of refreshing
+        const text_p = document.getElementById('speech-to-text-output');
+        const fetchData = () => {
+            fetch('/getText')
+                .then(response => response.json())
+                .then(response => {
+                    const text = response.displayText
+                    // document.getElementById('speech-to-text-output').innerText = text
+                    text_p.innerHTML = text;
+                    // console.log(response.displayText)
+                })
+
+            // window.location.replace('/display.html')
+        }
+
+        // const scrollDown = () => {
+        //     window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+        // };
+        $("document").ready(setInterval(() => {fetchData()}, 50));
     </script>
     <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
 </body>
