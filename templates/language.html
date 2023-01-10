@@ -23,6 +23,14 @@
         console.log(event.clientX)
         console.log(event.clientY)
     }
+    const printScrollDir = (evt) => {
+        console.log('scroll')
+        if (!evt) evt = event;
+        const scrollDir = (evt.detail<0) ? 1 : (evt.wheelDelta>0) ? 1 : -1;
+        document.getElementById('lang').innerHTML = scrollDir
+    };
     document.addEventListener('click', printMousePos);
+    document.addEventListener('mousewheel', printScrollDir);
+    document.addEventListener('scroll', printScrollDir);
 </script>
 </html>
