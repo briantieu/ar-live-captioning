@@ -14,30 +14,29 @@
     <div id="container">
         <p id='speech-to-text-output'></p>
     </div>
-    <script>
-        // TODO: use fetch requests instead of refreshing
-        const text_p = document.getElementById('speech-to-text-output');
-        const fetchData = () => {
-            fetch('/get_text')
-                .then(response => response.json())
-                .then(response => {
-                    const text = response.displayText
-                    // document.getElementById('speech-to-text-output').innerText = text
-                    text_p.innerHTML = text;
-                    // console.log(response.displayText)
-                })
-
-            // window.location.replace('/display.html')
-        }
-
-        // const scrollDown = () => {
-        //     window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
-        // };
-        $("document").ready(setInterval(() => {
-            fetchData()
-            window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight)
-        }, 50));
-    </script>
     <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
 </body>
+<script>
+    // TODO: use fetch requests instead of refreshing
+    const text_p = document.getElementById('speech-to-text-output');
+    const fetchData = () => {
+        fetch('/get_text')
+            .then(response => response.json())
+            .then(response => {
+                const text = response.displayText
+                // document.getElementById('speech-to-text-output').innerText = text
+                text_p.innerHTML = text;
+                // console.log(response.displayText)
+            })
+
+        // window.location.replace('/display.html')
+    }
+    document.addEventListener('mousedown', () => window.location.replace('language.html'))
+
+    $("document").ready(setInterval(() => {
+        fetchData()
+        window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight)
+    }, 50));
+
+</script>
 </html>

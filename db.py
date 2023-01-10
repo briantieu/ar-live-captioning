@@ -24,3 +24,17 @@ def read_db():
     texts = conn.execute('SELECT * FROM Texts').fetchall()
     conn.close()
     return texts
+
+def change_lang_db(language):
+    conn = connect_db()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM Lang")
+    cur.execute("INSERT INTO Lang (language) VALUES (?)", (language,))
+    conn.commit()
+    conn.close()
+
+def get_lang_db():
+    conn = connect_db()
+    language = conn.execute('SELECT * FROM Lang').fetchall()
+    conn.close()
+    return language

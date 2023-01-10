@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request, make_response, redirect, url_for
-from db import insert_db, read_db, init_db
+from db import insert_db, read_db, init_db, get_lang_db, change_lang_db
 import os
 import six
 from google.cloud import translate_v2 as translate
@@ -9,6 +9,7 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"serviceAccountToken.json" # /et
 app = Flask(__name__)
 
 translate_client = translate.Client()
+
 
 # translate text into target language using google translate api
 def translate_text(target, text):
@@ -30,7 +31,7 @@ def list_languages():
 @app.route('/translate_and_store', methods=['POST'])
 def translate_and_store():
     text = request.json['content']
-    translation = translate_text('es', text)['translatedText']
+    translation = translate_text(get_language(), text)['translatedText']
     insert_db(translation)
     return {}
 
@@ -40,6 +41,17 @@ def get_text():
     text = texts[0]['content'] if len(texts) > 0 else 'Listening...'
     message = {'displayText': text}
     return jsonify(message)
+
+def get_language():
+    lang = get_lang_db()
+    language = lang[0]['language'] if len(lang) > 0 else 'en'
+    return language
+
+@app.route('/change_language', methods=['POST'])
+def change_language():
+    language = request.json['language']
+    change_lang_db(language)
+    return {}
 
 # speaker display
 @app.route('/')

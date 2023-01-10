@@ -22,7 +22,7 @@ html {
     border-color: #e0e0e0; */
 }
 
-#speech-to-text-output {
+#speech-to-text-output, #lang {
     padding: 30px;
 }
 

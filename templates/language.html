@@ -12,31 +12,42 @@
 
 <body>
     <div id="container">
-        <p id="lang" ></p>
+        <p id="lang">Swipe to change language<br>Tap to cancel</p>
 
     </div>
 </body>
 <script>
-    // detects clicks on left and right of screen to switch between languages
-    const printMousePos = (event) => {
-        document.getElementById('lang').innerHTML = "clientX: " + event.clientX + " - clientY: " + event.clientY
-        console.log(event.clientX)
-        console.log(event.clientY)
-    }
-    const printScrollDir = (evt) => {
-        console.log('scroll')
-        if (!evt) evt = event;
-        const scrollDir = (evt.detail<0) ? 1 : (evt.wheelDelta>0) ? 1 : -1;
-        document.getElementById('lang').innerHTML = scrollDir
-    };
+    // detects left arrow and right arrow clicks to switch between languages
+    // chinese, spanish, english, hindi, arabic, portuguese, bengali, russian, japanese
+    const shorthandLangOptions = ['zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja']
+    const languageOptions = ['Chinese', 'Spanish', 'English', 'Hindi', 'Arabic', 'Portuguese', 'Bengali', 'Russian', 'Japanese']
+    let languageIndex = -1
+    const languageChangeClick = (event) => {
+        if (event.key != 'ArrowRight' && event.key != 'ArrowLeft') return
+        if (event.key == 'ArrowRight') {
+            languageIndex++
+            if (languageIndex == languageOptions.length) languageIndex = 0
+        } else if (event.key == 'ArrowLeft') {
+            languageIndex--
+            if (languageIndex < 0) languageIndex = languageOptions.length - 1
+        }
+        document.getElementById('lang').innerHTML = languageOptions[languageIndex % (languageOptions.length)] + "<br>Tap to confirm"
 
-    const printPress = (event) => {
-        console.log(event)
-        document.getElementById('lang').innerHTML = event.key
+        // change the language on backend
+        const postChangeLanguage = async (language) => {
+            const response = await fetch('/change_language', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'language': language
+                })
+            })
+        }
+        postChangeLanguage(shorthandLangOptions[languageIndex % (shorthandLangOptions.length)])
     }
-    document.addEventListener('click', printMousePos);
-    document.addEventListener('mousewheel', printScrollDir);
-    document.addEventListener('scroll', printScrollDir);
-    document.addEventListener('keydown', printPress)
+    document.addEventListener('keydown', languageChangeClick)
+    document.addEventListener('mousedown', () => window.location.replace('display.html'))
 </script>
 </html>
