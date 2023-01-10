@@ -12,17 +12,19 @@
 
 <body>
     <div id="container">
-        <p id="lang">Swipe to change language<br>Tap to cancel</p>
+        <p id="header-text">Tap to cancel</p>
+        <p id="lang">Swipe to change language</p>
+        <p id="use-arrows-text">(Use ← and → on desktop.)</p>
     </div>
 </body>
 
 <script>
     // detects left arrow and right arrow clicks to switch between languages
     // chinese, spanish, english, hindi, arabic, portuguese, bengali, russian, japanese
+    let languageIndex = -1
     const languageChangeClick = (event) => {
         const shorthandLangOptions = ['zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja']
         const languageOptions = ['Chinese', 'Spanish', 'English', 'Hindi', 'Arabic', 'Portuguese', 'Bengali', 'Russian', 'Japanese']
-        let languageIndex = -1
 
         if (event.key != 'ArrowRight' && event.key != 'ArrowLeft') return
         if (event.key == 'ArrowRight') {
@@ -32,7 +34,9 @@
             languageIndex--
             if (languageIndex < 0) languageIndex = languageOptions.length - 1
         }
-        document.getElementById('lang').innerHTML = languageOptions[languageIndex % (languageOptions.length)] + "<br>Tap to confirm"
+        document.getElementById('lang').innerHTML = languageOptions[languageIndex % (languageOptions.length)]
+        document.getElementById('header-text').innerHTML = 'Tap to confirm'
+        document.getElementById('use-arrows-text').innerHTML = ''
 
         // change the language on backend
         const postChangeLanguage = async (language) => {
