@@ -32,15 +32,12 @@ p {
     font-family: 'Roboto', sans-serif;
 }
 
-/* media queries */
+#header-text {
+    font-size: 20px;
+    padding: 30px 0px 0px 30px;
+}
 
-/* @media (max-width: 800px) {
-    body {
-        background: #f1f7dc;
-    }
-    #container {
-        margin: 0;
-        width: 100%;
-        padding: 2em;
-    }
-} */
+#change-lang-instruction {
+    font-size: 20px;
+    padding: 10px 0px 0px 30px;
+}

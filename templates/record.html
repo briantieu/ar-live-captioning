@@ -9,15 +9,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
-
 <body>
     <div id="container">
+        <p id="header-text">Speaking Language: <span id="language">English</span></p>
+        <p id="change-lang-instruction">Change language using ← and →.</p>
         <p id='speech-to-text-output'>Speak now...</p>
     </div>
-    <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
 </body>
+
 <script>
-    // POST to flask
+    // POST to flask to translate and store text
     const postTranslateAndStore = async (content) => {
         const response = await fetch('/translate_and_store', {
             method: 'POST',
@@ -39,7 +40,7 @@
     const recognition = new webkitSpeechRecognition(); // window.SpeechRecognition();
     // recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = 'en-US'; // es-MX
+    recognition.lang = 'en-US';
 
     // log error if necessary
     recognition.addEventListener('onerror', (e) => {
@@ -65,5 +66,27 @@
     })
 
     recognition.start();
+
+    // change language
+    let languageIndex = 2
+    const languageChangeClick = (event) => {
+        const shorthandLangOptions = ['zh', 'es-US', 'en-US', 'hi-IN', 'ar-EG', 'pt-BR', 'bn-IN', 'ru-RU', 'ja-JP']
+        const languageOptions = ['Mandarin', 'Spanish', 'English', 'Hindi', 'Arabic', 'Portuguese', 'Bengali', 'Russian', 'Japanese']
+
+        if (event.key != 'ArrowRight' && event.key != 'ArrowLeft') return
+        if (event.key == 'ArrowRight') {
+            languageIndex++
+            if (languageIndex == languageOptions.length) languageIndex = 0
+        } else if (event.key == 'ArrowLeft') {
+            languageIndex--
+            if (languageIndex < 0) languageIndex = languageOptions.length - 1
+        }
+        document.getElementById('language').innerHTML = languageOptions[languageIndex % (languageOptions.length)]
+
+        // change the language
+        recognition.lang = shorthandLangOptions[languageIndex % (shorthandLangOptions.length)]
+
+    }
+    document.addEventListener('keydown', languageChangeClick)
 </script>
 </html>

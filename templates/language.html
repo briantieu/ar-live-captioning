@@ -13,16 +13,17 @@
 <body>
     <div id="container">
         <p id="lang">Swipe to change language<br>Tap to cancel</p>
-
     </div>
 </body>
+
 <script>
     // detects left arrow and right arrow clicks to switch between languages
     // chinese, spanish, english, hindi, arabic, portuguese, bengali, russian, japanese
-    const shorthandLangOptions = ['zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja']
-    const languageOptions = ['Chinese', 'Spanish', 'English', 'Hindi', 'Arabic', 'Portuguese', 'Bengali', 'Russian', 'Japanese']
-    let languageIndex = -1
     const languageChangeClick = (event) => {
+        const shorthandLangOptions = ['zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja']
+        const languageOptions = ['Chinese', 'Spanish', 'English', 'Hindi', 'Arabic', 'Portuguese', 'Bengali', 'Russian', 'Japanese']
+        let languageIndex = -1
+
         if (event.key != 'ArrowRight' && event.key != 'ArrowLeft') return
         if (event.key == 'ArrowRight') {
             languageIndex++
@@ -48,6 +49,8 @@
         postChangeLanguage(shorthandLangOptions[languageIndex % (shorthandLangOptions.length)])
     }
     document.addEventListener('keydown', languageChangeClick)
+
+    // return back to display
     document.addEventListener('mousedown', () => window.location.replace('display.html'))
 </script>
 </html>
