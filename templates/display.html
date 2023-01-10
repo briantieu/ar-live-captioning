@@ -12,13 +12,13 @@
 
 <body>
     <div id="container">
-        <p id='speech-to-text-output'>{{text}}</p>
+        <p id='speech-to-text-output'></p>
     </div>
     <script>
         // TODO: use fetch requests instead of refreshing
         const text_p = document.getElementById('speech-to-text-output');
         const fetchData = () => {
-            fetch('/getText')
+            fetch('/get_text')
                 .then(response => response.json())
                 .then(response => {
                     const text = response.displayText
@@ -33,7 +33,10 @@
         // const scrollDown = () => {
         //     window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
         // };
-        $("document").ready(setInterval(() => {fetchData()}, 50));
+        $("document").ready(setInterval(() => {
+            fetchData()
+            window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight)
+        }, 50));
     </script>
     <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
 </body>

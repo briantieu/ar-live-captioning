@@ -24,7 +24,3 @@ def read_db():
     texts = conn.execute('SELECT * FROM Texts').fetchall()
     conn.close()
     return texts
-
-if __name__ == '__main__':
-    init_db()
-    insert_db('Listening...')

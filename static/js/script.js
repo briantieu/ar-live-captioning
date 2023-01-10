@@ -1,5 +1,6 @@
-const postInsertDb = async (content) => {
-    const response = await fetch('/insertdb', {
+// POST to flask
+const postTranslateAndStore = async (content) => {
+    const response = await fetch('/translate_and_store', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -10,66 +11,38 @@ const postInsertDb = async (content) => {
     })
 }
 
-// const postTranslate = async () => {
-//     const response = await fetch('https://translation.googleapis.com/language/translate/v2', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': 'Bearer ',
-//             // 'key': 'AIzaSyDBQFQ0NyHJyXekQ_1AubHCBwjpyereIoY'
-//         },
-//         body: JSON.stringify({
-//             'q': 'ice cream cake',
-//             'target': 'zh',
-//             'format': 'text',
-//             'key': 'AIzaSyDBQFQ0NyHJyXekQ_1AubHCBwjpyereIoY'
-//         })
-//     })
-//     console.log(response)
-// }
-
-const text_p = document.getElementById('speech-to-text-output');
-
+// alert if browser is unable to use speech recognition
 if (!window.hasOwnProperty("webkitSpeechRecognition")) {
     alert("Unable to use the Speech Recognition API");
-} else {
-    console.log("Good to go.")
 }
 
 // window.SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
-
 const recognition = new webkitSpeechRecognition(); // window.SpeechRecognition();
 // recognition.continuous = true;
 recognition.interimResults = true;
 recognition.lang = 'en-US'; // es-MX
 
+// log error if necessary
 recognition.addEventListener('onerror', (e) => {
     console.error(e);
 });
 
+// upon getting a recognition result
 recognition.addEventListener('result', (e) => {
     const text = Array.from(e.results)
         .map(result => result[0])
         .map(result => result.transcript)
         .join('');
-    console.log(text);
-    postInsertDb(text);
-    // postTranslate(text);
-    text_p.innerHTML = text;
+
+    // translate, store, and display it
+    postTranslateAndStore(text);
+    document.getElementById('speech-to-text-output').innerHTML = text;
     window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
 });
 
+// continually start up if speech recognition ends
 recognition.addEventListener('end', () => {
     recognition.start();
 })
 
 recognition.start();
-
-// var recognition = new webkitSpeechRecognition();
-// recognition.lang = "en-GB";
-
-// recognition.onresult = function(event) {
-//     console.log(event);
-//     document.getElementById('speech-to-text-output').value = event.results[0][0].transcript;
-// }
-// recognition.start();
