@@ -29,8 +29,14 @@
         const scrollDir = (evt.detail<0) ? 1 : (evt.wheelDelta>0) ? 1 : -1;
         document.getElementById('lang').innerHTML = scrollDir
     };
+
+    const printPress = (event) => {
+        console.log(event)
+        document.getElementById('lang').innerHTML = event.key
+    }
     document.addEventListener('click', printMousePos);
     document.addEventListener('mousewheel', printScrollDir);
     document.addEventListener('scroll', printScrollDir);
+    document.addEventListener('keydown', printPress)
 </script>
 </html>
