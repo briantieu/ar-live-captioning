@@ -55,21 +55,21 @@ def change_language():
 
 # speaker display
 @app.route('/')
-@app.route('/record')
+@app.route('/speak')
 def record():
     html = render_template('record.html')
     response = make_response(html)
     return response
 
 # google glass transcription display
-@app.route('/display')
+@app.route('/view')
 def display():
     html = render_template('display.html')
     response = make_response(html)
     return response
 
-# google glass change language display
-@app.route('/language')
+# google glass change display language
+@app.route('/change_view_language')
 def language():
     html = render_template('language.html')
     response = make_response(html)

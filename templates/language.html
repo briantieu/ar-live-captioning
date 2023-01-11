@@ -59,30 +59,6 @@
     }
     document.addEventListener('keydown', languageChangeClick)
 
-    // handle touch devices
-    let touchstartX = 0
-    let touchendX = 0
-
-    document.addEventListener('touchstart', e => {
-    touchstartX = e.changedTouches[0].screenX
-    })
-
-    document.addEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX
-    checkDirection()
-    })
-
-    const languageChangeTap = (event) => {
-        if (touchendX > touchstartX) {
-            languageIndex++
-            if (languageIndex == languageOptions.length) languageIndex = 0
-        } else if (touchendX < touchstartX) {
-            languageIndex--
-            if (languageIndex < 0) languageIndex = languageOptions.length - 1
-        }
-        changeLanguage()
-    }
-
     // return back to display
     document.addEventListener('mousedown', () => window.location.replace('display'))
 
