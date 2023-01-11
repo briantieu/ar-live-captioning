@@ -62,14 +62,14 @@ def record():
     return response
 
 # google glass transcription display
-@app.route('/view')
+@app.route('/display')
 def display():
     html = render_template('display.html')
     response = make_response(html)
     return response
 
 # google glass change display language
-@app.route('/change_view_language')
+@app.route('/changelanguage')
 def language():
     html = render_template('language.html')
     response = make_response(html)
