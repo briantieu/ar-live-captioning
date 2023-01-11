@@ -38,7 +38,7 @@ def translate_and_store():
 @app.route('/get_text', methods=['GET'])
 def get_text():
     texts = read_db()
-    text = texts[0]['content'] if len(texts) > 0 else 'Listening...'
+    text = texts[0]['content'] if len(texts) > 0 else ''
     message = {'displayText': text}
     return jsonify(message)
 
