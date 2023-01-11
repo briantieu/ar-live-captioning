@@ -22,23 +22,16 @@
     // detects left arrow and right arrow clicks to switch between languages
     // chinese, spanish, english, hindi, arabic, portuguese, bengali, russian, japanese
     let languageIndex = -1
-    const languageChangeClick = (event) => {
-        const shorthandLangOptions = ['zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja']
-        const languageOptions = ['Chinese', 'Spanish', 'English', 'Hindi', 'Arabic', 'Portuguese', 'Bengali', 'Russian', 'Japanese']
+    const shorthandLangOptions = ['zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja']
+    const languageOptions = ['Chinese', 'Spanish', 'English', 'Hindi', 'Arabic', 'Portuguese', 'Bengali', 'Russian', 'Japanese']
 
-        if (event.key != 'ArrowRight' && event.key != 'ArrowLeft') return
-        if (event.key == 'ArrowRight') {
-            languageIndex++
-            if (languageIndex == languageOptions.length) languageIndex = 0
-        } else if (event.key == 'ArrowLeft') {
-            languageIndex--
-            if (languageIndex < 0) languageIndex = languageOptions.length - 1
-        }
+    const changeLanguage = () => {
+        // change language on frontend
         document.getElementById('lang').innerHTML = languageOptions[languageIndex % (languageOptions.length)]
         document.getElementById('header-text').innerHTML = 'Tap to confirm'
         document.getElementById('use-arrows-text').innerHTML = ''
 
-        // change the language on backend
+        // change language on backend
         const postChangeLanguage = async (language) => {
             const response = await fetch('/change_language', {
                 method: 'POST',
@@ -52,9 +45,47 @@
         }
         postChangeLanguage(shorthandLangOptions[languageIndex % (shorthandLangOptions.length)])
     }
+
+    const languageChangeClick = (event) => {
+        if (event.key != 'ArrowRight' && event.key != 'ArrowLeft') return
+        if (event.key == 'ArrowRight') {
+            languageIndex++
+            if (languageIndex == languageOptions.length) languageIndex = 0
+        } else if (event.key == 'ArrowLeft') {
+            languageIndex--
+            if (languageIndex < 0) languageIndex = languageOptions.length - 1
+        }
+        changeLanguage()
+    }
     document.addEventListener('keydown', languageChangeClick)
 
+    // handle touch devices
+    let touchstartX = 0
+    let touchendX = 0
+
+    document.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX
+    })
+
+    document.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+    })
+
+    const languageChangeTap = (event) => {
+        if (touchendX > touchstartX) {
+            languageIndex++
+            if (languageIndex == languageOptions.length) languageIndex = 0
+        } else if (touchendX < touchstartX) {
+            languageIndex--
+            if (languageIndex < 0) languageIndex = languageOptions.length - 1
+        }
+        changeLanguage()
+    }
+
     // return back to display
-    document.addEventListener('mousedown', () => window.location.replace('display.html'))
+    document.addEventListener('mousedown', () => window.location.replace('display'))
+
+
 </script>
 </html>
